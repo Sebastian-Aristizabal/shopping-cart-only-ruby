@@ -38,34 +38,40 @@ class ProductsController
   def select_product
 
     # Select the product you want to buy
-    product = @products_view.ask_user_for('product')
+    product_name = @products_view.ask_user_for('product name')
     # # 7. Ask user for quantity
-
+    product = @product_repository.find(product_name)
     # look for the product price in repository
-    price = @product_repository.find_product(product)
-
     puts "-------------------------------"
-    p price
-    puts "-------------------------------"
-
-    puts " \n \n \n"
-
-    h = { products: product, price: price }
-    product = Product.new(h)
     p product
+    puts "-------------------------------"
     quantity = @products_view.ask_user_for('quantity').to_i
-    total_price(product, quantity)
+    # 8. Calculate total price
+    price = product.price
+    total_price, product_tired_price = total_price_product(product, quantity)
+    @products_view.display_total_price(product, quantity, price || product_tired_price, total_price)
+
   end
 
   private
 
-  def total_price(product, quantity)
-    p product.price
+  def total_price_product(product, quantity)
     # 8. Calculate total price
-    total_price = product.price * quantity
+
+    if product.price_model == "fixed"
+      total_price = product.price * quantity
+    elsif product.price_model == "tiered"
+      total_price = 0
+      product.tiers.each do |tier|
+        if quantity >= tier[:from] && quantity <= tier[:to]
+          return tier[:price] * quantity, tier[:price]
+        end
+      end
+    end
     # 9. Display total price
 
   end
+
 
 
   # def find_id

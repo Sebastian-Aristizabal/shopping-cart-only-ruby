@@ -12,6 +12,17 @@ class ProductRepository
     @products
   end
 
+  def find(name)
+    @products.find { |product| product.name == name }
+  end
+
+  def find_product(name)
+    puts "\n \n"
+    puts " productsssssssssssssssssssssssssssss"
+     p @products
+    @product.find { |item| item.name == name }
+    # @products.find { |item| puts item; item.name == product }
+  end
   def find_product(product)
     puts "\n \n"
     puts " productsssssssssssssssssssssssssssss"

@@ -9,6 +9,7 @@ class Product
     @tiers = product[:tiers] || nil
   end
 
+
   # def cost
   #   if @price_model == "fixed"
   #     @price
