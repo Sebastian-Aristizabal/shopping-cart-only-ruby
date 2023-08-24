@@ -12,8 +12,8 @@ product_repository = ProductRepository.new(product_file_path)
 shopping_cart_file_path = File.join(__dir__, "data/shopping_cart.csv")
 shopping_cart_repository = ShoppingCartRepository.new(shopping_cart_file_path)
 
-shopping_carts_controller = ShoppingCartsController.new(shopping_cart_repository)
-products_controller = ProductsController.new(product_repository, shopping_cart_repository)
+products_controller = ProductsController.new(product_repository)
+shopping_carts_controller = ShoppingCartsController.new(shopping_cart_repository, product_repository)
 
 router = Router.new(products_controller, shopping_carts_controller)
 router.run

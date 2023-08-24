@@ -1,3 +1,8 @@
 name,quantity,unit_price,total_price,final_total_price
-apple,2,12,24,24
-apple,15,,135,
+orange,4,12,48
+apple,9,0,90
+orange,5,12,60
+apple,25,0,200
+apple,17,0,153
+apple,21,8,168
+apple,13,9,117

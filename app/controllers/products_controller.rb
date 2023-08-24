@@ -1,12 +1,10 @@
 require_relative '../views/products_view'
 require_relative '../models/product'
-require_relative '../models/shopping_cart'
-require_relative '../repositories/shopping_cart_repository'
+
 
 class ProductsController
-  def initialize(product_repository, shopping_cart_repository)
+  def initialize(product_repository)
     @product_repository = product_repository
-    @shopping_cart_repository = shopping_cart_repository
     @products_view = ProductsView.new
   end
 
@@ -58,7 +56,7 @@ class ProductsController
 
     # 10. Add to shopping cart
     # shopping_cart_product =
-    shopping_cart = ShoppingCart.new(name: product_name, quantity: quantity, unit_price: price, total_price: total_price, final_total_price: final_total_price)
+    shopping_cart = ShoppingCart.new(name: product_name, quantity: quantity, unit_price: price, total_price: total_price)
 
     # 11. Store it in repo
     @shopping_cart_repository.create(shopping_cart)

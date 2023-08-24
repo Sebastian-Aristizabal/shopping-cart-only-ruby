@@ -24,7 +24,6 @@ class ShoppingCartRepository
       row[:quantity] = row[:quantity].to_i
       row[:unit_price] = row[:unit_price].to_i
       row[:total_price] = row[:total_price].to_i
-      row[:final_total_price] = row[:final_total_price].to_i
       @shopping_cart << ShoppingCart.new(row)
       p @shopping_cart
     end
@@ -34,7 +33,7 @@ class ShoppingCartRepository
     CSV.open(@file_path, 'wb', headers: :first_row) do |csv|
       csv << ["name", "quantity", "unit_price", "total_price", "final_total_price"]
       @shopping_cart.each do |item_cart|
-        csv << [item_cart.name, item_cart.quantity, item_cart.unit_price, item_cart.total_price, item_cart.final_total_price]
+        csv << [item_cart.name, item_cart.quantity, item_cart.unit_price, item_cart.total_price]
       end
     end
   end

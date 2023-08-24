@@ -18,8 +18,8 @@ class Router
     puts "----------Welcome to the Grocery Store---------------"
     puts "Please pick an option"
     puts "1. List all products"
-    puts "2. Select a product"
-    puts "3. Add a product to the shopping cart"
+    puts "2. Add a product to the shopping cart"
+    puts "3. List shooping cart products"
     # puts "2. List all meals"
     # puts "2. Add a new meal"
     # puts "3. find a meal by id"
@@ -31,7 +31,7 @@ class Router
   def route_action(choice)
     case choice
     when 1 then @products_controller.list
-    when 2 then @products_controller.cost_calculator
+    when 2 then @shopping_carts_controller.cost_calculator
     when 3 then @shopping_carts_controller.list_shopping_cart
     # when 2 then @meals_controller.add
     # when 3 then @meals_controller.find_id
