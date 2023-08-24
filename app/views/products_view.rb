@@ -32,6 +32,12 @@ class ProductsView
     puts "      #{product.name}             #{quantity}               #{unit_price}            #{total_price}$"
   end
 
+  def display_final_total_price(total_price)
+    puts "-------------------------FINAL TOTAL PRICE-----------------------------"
+    puts "\n"
+    puts "      #{total_price}$"
+  end
+
   def ask_user_for(stuff)
     puts "#{stuff.capitalize}?"
     print "> "

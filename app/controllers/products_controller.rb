@@ -1,9 +1,12 @@
 require_relative '../views/products_view'
 require_relative '../models/product'
+require_relative '../models/shopping_cart'
+require_relative '../repositories/shopping_cart_repository'
 
 class ProductsController
-  def initialize(product_repository)
+  def initialize(product_repository, shopping_cart_repository)
     @product_repository = product_repository
+    @shopping_cart_repository = shopping_cart_repository
     @products_view = ProductsView.new
   end
 
@@ -35,7 +38,7 @@ class ProductsController
 
   end
 
-  def select_product
+  def cost_calculator
 
     # Select the product you want to buy
     product_name = @products_view.ask_user_for('product name')
@@ -46,11 +49,19 @@ class ProductsController
     p product
     puts "-------------------------------"
     quantity = @products_view.ask_user_for('quantity').to_i
-    # 8. Calculate total price
+    # 8. Calculate total price per unit
     price = product.price
     total_price, product_tired_price = total_price_product(product, quantity)
     @products_view.display_total_price(product, quantity, price || product_tired_price, total_price)
+    # 9. Display final total price
+    final_total_price = final_total_price(total_price)
 
+    # 10. Add to shopping cart
+    # shopping_cart_product =
+    shopping_cart = ShoppingCart.new(name: product_name, quantity: quantity, unit_price: price, total_price: total_price, final_total_price: final_total_price)
+
+    # 11. Store it in repo
+    @shopping_cart_repository.create(shopping_cart)
   end
 
   private
@@ -68,12 +79,15 @@ class ProductsController
         end
       end
     end
-    # 9. Display total price
-
   end
 
+  # 9. Display final total price
+  def final_total_price(total_price)
+    final_total_price = 0
 
-
+    final_total_price += total_price
+    @products_view.display_final_total_price(total_price)
+  end
   # def find_id
   #   list
   #   id = @products_view.ask_user_for('id').to_i

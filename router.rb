@@ -1,6 +1,7 @@
 class Router
-  def initialize(products_controller)
+  def initialize(products_controller, shopping_carts_controller)
     @products_controller = products_controller
+    @shopping_carts_controller = shopping_carts_controller
     @running = true
   end
 
@@ -18,6 +19,7 @@ class Router
     puts "Please pick an option"
     puts "1. List all products"
     puts "2. Select a product"
+    puts "3. Add a product to the shopping cart"
     # puts "2. List all meals"
     # puts "2. Add a new meal"
     # puts "3. find a meal by id"
@@ -29,7 +31,8 @@ class Router
   def route_action(choice)
     case choice
     when 1 then @products_controller.list
-    when 2 then @products_controller.select_product
+    when 2 then @products_controller.cost_calculator
+    when 3 then @shopping_carts_controller.list_shopping_cart
     # when 2 then @meals_controller.add
     # when 3 then @meals_controller.find_id
     # when 4 then @customers_controller.add
