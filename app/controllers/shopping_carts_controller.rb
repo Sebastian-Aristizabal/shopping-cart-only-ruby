@@ -17,15 +17,10 @@ class ShoppingCartsController
   end
 
   def list_shopping_cart
-    shopping_cart = @shopping_cart_repository.all
-    p shopping_cart
 
-    # @products_view.display(products)
-
-    # product1 = 'kiwi'
-    # h = { name: product1 }
-    # product = Product.new(h)
-    # p product.products
+    shopping_cart_products = @shopping_cart_repository.all
+    @shopping_carts_view.display_list_shopping_cart(shopping_cart_products)
+    
   end
 
   def cost_calculator

@@ -1,10 +1,17 @@
 class ShoppingCartsView
 
-  def display_total_price(product, quantity, unit_price, total_price)
+  def display_list_shopping_cart(shopping_cart_products)
     puts "-------------------------TOTAL PRICE-----------------------------"
     puts "\n"
     puts "   Product Name       Quantity       Unit Price    Total Price  "
-    puts "      #{product.name}             #{quantity}               #{unit_price}            #{total_price}$"
+    if shopping_cart_products.empty?
+      puts "Your shopping cart is empty"
+    else
+      shopping_cart_products.each do |shopping_cart_product|
+        puts "      #{shopping_cart_product.name}             #{shopping_cart_product.quantity}               #{shopping_cart_product.unit_price}            #{shopping_cart_product.total_price}$"
+      end
+    end
+    puts "TOTAL:                                                                                #{}$"
   end
 
   def display_final_total_price(total_price)
