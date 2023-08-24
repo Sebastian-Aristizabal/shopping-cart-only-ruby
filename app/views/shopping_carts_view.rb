@@ -11,13 +11,12 @@ class ShoppingCartsView
         puts "      #{shopping_cart_product.name}             #{shopping_cart_product.quantity}               #{shopping_cart_product.unit_price}            #{shopping_cart_product.total_price}$"
       end
     end
-    puts "TOTAL:                                                                                #{}$"
+
   end
 
-  def display_final_total_price(total_price)
-    puts "-------------------------FINAL TOTAL PRICE-----------------------------"
-    puts "\n"
-    puts "      #{total_price}$"
+  def display_final_total_price(total_shopping_cart)
+    puts " \n"
+    puts "TOTAL:................................................#{total_shopping_cart}$"
   end
 
   def ask_user_for(stuff)

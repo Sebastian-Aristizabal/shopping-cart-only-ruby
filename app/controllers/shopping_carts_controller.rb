@@ -9,6 +9,7 @@ class ShoppingCartsController
     @product_repository = product_repository
     @products_view = ProductsView.new
     @shopping_carts_view = ShoppingCartsView.new
+    @total_price = 0
   end
 
 
@@ -17,10 +18,12 @@ class ShoppingCartsController
   end
 
   def list_shopping_cart
-
     shopping_cart_products = @shopping_cart_repository.all
+    total_shopping_cart = shopping_cart_total_price(shopping_cart_products)
+
     @shopping_carts_view.display_list_shopping_cart(shopping_cart_products)
-    
+    @shopping_carts_view.display_final_total_price(@total_price)
+
   end
 
   def cost_calculator
@@ -38,8 +41,6 @@ class ShoppingCartsController
     price = product.price
     total_price, product_tired_price = total_price_product(product, quantity)
     @products_view.display_total_price(product, quantity, price || product_tired_price, total_price)
-    # 9. Display final total price
-    final_total_price = final_total_price(total_price)
 
     # 10. Add to shopping cart
     # shopping_cart_product =
@@ -67,8 +68,11 @@ class ShoppingCartsController
   end
 
   # 9. Display final total price
-  def final_total_price(total_price)
-    final_total_price = 0
+  def shopping_cart_total_price(shopping_cart_products)
+    shopping_cart_products.each do |product|
+      @total_price += product.total_price
+      p @total_price
+    end
 
   end
 end
