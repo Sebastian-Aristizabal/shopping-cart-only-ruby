@@ -1,7 +1,7 @@
 class ShoppingCartsView
 
   def display_list_shopping_cart(shopping_cart_products)
-    puts "-------------------------TOTAL PRICE-----------------------------"
+    puts "-------------------------SHOPPING CART-----------------------------"
     puts "\n"
     puts "   Product Name       Quantity       Unit Price    Total Price  "
     if shopping_cart_products.empty?
@@ -17,6 +17,7 @@ class ShoppingCartsView
   def display_final_total_price(total_shopping_cart)
     puts " \n"
     puts "TOTAL:................................................#{total_shopping_cart}$"
+    puts " \n \n"
   end
 
   def ask_user_for(stuff)

@@ -71,7 +71,6 @@ class ShoppingCartsController
   def shopping_cart_total_price(shopping_cart_products)
     shopping_cart_products.each do |product|
       @total_price += product.total_price
-      p @total_price
     end
 
   end

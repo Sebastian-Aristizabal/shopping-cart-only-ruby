@@ -79,17 +79,4 @@ class ProductsController
     end
   end
 
-  # 9. Display final total price
-  def final_total_price(total_price)
-    final_total_price = 0
-
-    final_total_price += total_price
-    @products_view.display_final_total_price(total_price)
-  end
-  # def find_id
-  #   list
-  #   id = @products_view.ask_user_for('id').to_i
-  #   product = @product_repository.find(id)
-  #   @products_view.display_product_id(product)
-  # end
 end
