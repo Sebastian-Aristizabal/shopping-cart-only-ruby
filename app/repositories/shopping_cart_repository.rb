@@ -25,7 +25,6 @@ class ShoppingCartRepository
       row[:unit_price] = row[:unit_price].to_i
       row[:total_price] = row[:total_price].to_i
       @shopping_cart << ShoppingCart.new(row)
-      p @shopping_cart
     end
   end
 

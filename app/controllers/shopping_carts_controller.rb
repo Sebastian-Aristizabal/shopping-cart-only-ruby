@@ -4,9 +4,10 @@ require_relative '../models/product'
 require_relative '../controllers/products_controller'
 
 class ShoppingCartsController
-  def initialize(shopping_cart_repository, product_repository)
-    @shopping_cart_repository = shopping_cart_repository
+  def initialize(shopping_cart_repository, product_repository, optional_repository)
     @product_repository = product_repository
+    @optional_repository = optional_repository
+    @shopping_cart_repository = shopping_cart_repository
     @products_view = ProductsView.new
     @shopping_carts_view = ShoppingCartsView.new
     @total_price = 0
@@ -18,10 +19,13 @@ class ShoppingCartsController
   end
 
   def list_shopping_cart
+    @total_price = 0
     shopping_cart_products = @shopping_cart_repository.all
     total_shopping_cart = shopping_cart_total_price(shopping_cart_products)
 
     @shopping_carts_view.display_list_shopping_cart(shopping_cart_products)
+    return yield if block_given?
+
     @shopping_carts_view.display_final_total_price(@total_price)
 
   end
@@ -33,9 +37,6 @@ class ShoppingCartsController
     # # 7. Ask user for quantity
     product = @product_repository.find(product_name)
     # look for the product price in repository
-    puts "-------------------------------"
-    p product
-    puts "-------------------------------"
     quantity = @products_view.ask_user_for('quantity').to_i
     # 8. Calculate total price per unit
     price = product.price
@@ -50,7 +51,23 @@ class ShoppingCartsController
     @shopping_cart_repository.create(shopping_cart)
   end
 
+
+  def finishing_purchase
+    shopping_cart_products = @shopping_cart_repository.all
+    bag = @products_view.ask_user_for('Do you want a bag with your purchase? (y/n)')
+
+    if ["y", 'YES', 'yes', 'Yes', 'si', 'Si', 'SI'].include?(bag)
+
+      list_shopping_cart { @shopping_carts_view.display_bug_buy; @shopping_carts_view.display_final_total_price(@total_price + 2) }
+    else
+      list_shopping_cart { @shopping_carts_view.display_final_total_price(@total_price) }
+    end
+
+  end
+
   private
+
+
 
   def total_price_product(product, quantity)
     # 8. Calculate total price

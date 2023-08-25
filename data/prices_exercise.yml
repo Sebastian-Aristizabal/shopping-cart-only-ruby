@@ -42,10 +42,12 @@ optionals:
   bag:
     price_model: fixed
     price: 2
+    name: bag
 
   tip:
     price_model: user_defined
-    min: 0.1 # en caso de agregar propina, no puede ser menor al 10% del valor de los productos
+    # price: 0 # en caso de agregar propina, no puede ser menor al 10% del valor de los productos
+    name: tip
 
 promotions:
   one:

@@ -14,6 +14,11 @@ class ShoppingCartsView
 
   end
 
+
+  def display_bug_buy
+    puts " \n -----------------------------------------------------------------------"
+    puts "      Bag:             1                 2$             2$"
+  end
   def display_final_total_price(total_shopping_cart)
     puts " \n"
     puts "TOTAL:................................................#{total_shopping_cart}$"
