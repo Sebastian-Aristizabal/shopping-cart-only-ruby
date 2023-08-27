@@ -25,6 +25,9 @@ class ShoppingCartsView
     puts " \n \n"
   end
 
+  def display_tip_error
+    puts "Tip can be less than 10% of the total price"
+  end
   def ask_user_for(stuff)
     puts "#{stuff.capitalize}?"
     print "> "

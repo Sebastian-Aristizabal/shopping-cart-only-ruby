@@ -54,20 +54,56 @@ class ShoppingCartsController
 
   def finishing_purchase
     shopping_cart_products = @shopping_cart_repository.all
-    bag = @products_view.ask_user_for('Do you want a bag with your purchase? (y/n)')
 
-    if ["y", 'YES', 'yes', 'Yes', 'si', 'Si', 'SI'].include?(bag)
+    ############## bag logic ############################
+    @bag = @products_view.ask_user_for('Do you want a bag with your purchase? (y/n)')
+
+    if ["y", 'YES', 'yes', 'Yes', 'si', 'Si', 'SI'].include?(@bag)
 
       list_shopping_cart { @shopping_carts_view.display_bug_buy; @shopping_carts_view.display_final_total_price(@total_price + 2) }
     else
       list_shopping_cart { @shopping_carts_view.display_final_total_price(@total_price) }
     end
-
+    ############### tip logic ##############################
+    tip_calculator
   end
 
   private
 
+  def tip_calculator
 
+    tip = @products_view.ask_user_for('Do you want to tip? (y/n)')
+
+    if ["y", 'YES', 'yes', 'Yes', 'si', 'Si', 'SI'].include?(tip)
+      tip = @products_view.ask_user_for("How much do you want to give a tip($ dollars)? \n tip cannot be less than 10% of the total price(#{(@total_price * 0.1).round(2)}$))")
+
+      if tip.to_i < @total_price * 0.1
+        @shopping_carts_view.display_tip_error
+        tip_calculator
+
+      else
+        if ["y", 'YES', 'yes', 'Yes', 'si', 'Si', 'SI'].include?(@bag)
+
+          list_shopping_cart { @shopping_carts_view.display_bug_buy; @shopping_carts_view.display_final_total_price((@total_price + 2).round(2)) }
+          @shopping_carts_view.display_final_total_price((@total_price + 2) + tip.to_i)
+        else
+          list_shopping_cart { @shopping_carts_view.display_bug_buy; @shopping_carts_view.display_final_total_price(@total_price) }
+          @shopping_carts_view.display_final_total_price(@total_price + tip.to_i)
+        end
+      end
+    else
+      # @shopping_carts_view.display_final_total_price(@total_price)
+      if ["y", 'YES', 'yes', 'Yes', 'si', 'Si', 'SI'].include?(@bag)
+
+        list_shopping_cart { @shopping_carts_view.display_bug_buy; @shopping_carts_view.display_final_total_price((@total_price + 2).round(2)) }
+        @shopping_carts_view.display_final_total_price((@total_price + 2) + tip.to_i)
+      else
+        list_shopping_cart { @shopping_carts_view.display_bug_buy; @shopping_carts_view.display_final_total_price(@total_price) }
+        @shopping_carts_view.display_final_total_price(@total_price + tip.to_i)
+      end
+    end
+
+  end
 
   def total_price_product(product, quantity)
     # 8. Calculate total price
