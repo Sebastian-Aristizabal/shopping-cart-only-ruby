@@ -1,14 +1,12 @@
 class ProductsView
 
   def display(products)
-    p products
     puts "-----------------ALL PRODUCTS---------------------"
     puts "\n"
     products.each_with_index do |product, index|
       if product.price_model == "fixed"
         puts "#{index + 1}. #{product.name.capitalize}"
         puts "          Price per unit: #{product.price}$"
-
 
       elsif product.price_model == "tiered"
         puts "#{index + 1}. #{product.name.capitalize}"
@@ -20,11 +18,6 @@ class ProductsView
     end
   end
 
-  # def display_price_id(price)
-  #   puts "id: #{price.id} #{price.name} - #{price.price}$"
-  # end
-
-
   def display_total_price(product, quantity, unit_price, total_price)
     puts "-------------------------TOTAL PRICE PER PRODUCT-----------------------------"
     puts "\n"
@@ -32,16 +25,9 @@ class ProductsView
     puts "      #{product.name}             #{quantity}               #{unit_price}            #{total_price}$"
   end
 
-
   def ask_user_for(stuff)
     puts "#{stuff.capitalize}?"
     print "> "
     return gets.chomp
   end
-
-  # def ask_user_for_index
-  #   puts "Index?"
-  #   print "> "
-  #   return gets.chomp.to_i - 1
-  # end
 end

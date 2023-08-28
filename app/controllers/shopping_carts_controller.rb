@@ -15,10 +15,6 @@ class ShoppingCartsController
   end
 
 
-  def add
-
-  end
-
   def list_shopping_cart
     @total_price = 0
     shopping_cart_products = @shopping_cart_repository.all
@@ -68,20 +64,13 @@ class ShoppingCartsController
     ############### tip logic ##############################
     promotion
     tip_calculator
-    puts "\n \n"
-    # p @shopping_cart_repository.all
-    puts "\n \n"
-    p @total_price
-    puts "\n \n"
-    p @shopping_cart_repository.count
-
   end
 
   private
 
   def tip_calculator
 
-    tip = @products_view.ask_user_for('Do you want to tip? (y/n)')
+    tip = @products_view.ask_user_for('Do you want to give tip? (y/n)')
 
     if ["y", 'YES', 'yes', 'Yes', 'si', 'Si', 'SI'].include?(tip)
       tip = @products_view.ask_user_for("How much do you want to give a tip($ dollars)? \n tip cannot be less than 10% of the total price(#{(@total_price * 0.1).round(2)}$))")
@@ -104,7 +93,6 @@ class ShoppingCartsController
         end
       end
     else
-      # @shopping_carts_view.display_final_total_price(@total_price)
       if ["y", 'YES', 'yes', 'Yes', 'si', 'Si', 'SI'].include?(@bag)
         tip = 0
         list_shopping_cart { @shopping_carts_view.display_bug_buy; @shopping_carts_view.display_final_total_price((@total_price + 2).round(2)) }

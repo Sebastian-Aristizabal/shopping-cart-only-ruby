@@ -21,14 +21,8 @@ class ProductRepository
     puts " productsssssssssssssssssssssssssssss"
      p @products
     @product.find { |item| item.name == name }
-    # @products.find { |item| puts item; item.name == product }
   end
-  # def find_product(product)
-  #   puts "\n \n"
-  #   puts " productsssssssssssssssssssssssssssss"
-  #    p @products
-  #   @products.each { |item| puts item; item.name == product }
-  # end
+
   private
 
   def load_yml

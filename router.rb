@@ -21,10 +21,6 @@ class Router
     puts "2. Add a product to the shopping cart"
     puts "3. List shooping cart products"
     puts "4 finish purchase"
-    # puts "2. List all meals"
-    # puts "2. Add a new meal"
-    # puts "3. find a meal by id"
-    # puts "4. Add a new customer"
     puts "5. Exit"
     print "> "
   end
@@ -35,10 +31,6 @@ class Router
     when 2 then @shopping_carts_controller.cost_calculator
     when 3 then @shopping_carts_controller.list_shopping_cart
     when 4 then @shopping_carts_controller.finishing_purchase
-    # when 2 then @meals_controller.add
-    # when 3 then @meals_controller.find_id
-    # when 4 then @customers_controller.add
-
     when 5 then stop!
     else puts "try Again..."
     end

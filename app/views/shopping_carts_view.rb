@@ -28,6 +28,7 @@ class ShoppingCartsView
     puts " \n -----------------------------------------------------------------------"
     puts "      Bag:             1                 2$             2$"
   end
+  
   def display_final_total_price(total_shopping_cart)
     puts " \n"
     puts "TOTAL:................................................#{total_shopping_cart}$"
@@ -37,10 +38,10 @@ class ShoppingCartsView
   def display_tip_error
     puts "Tip can be less than 10% of the total price"
   end
+
   def ask_user_for(stuff)
     puts "#{stuff.capitalize}?"
     print "> "
     return gets.chomp
   end
-
 end

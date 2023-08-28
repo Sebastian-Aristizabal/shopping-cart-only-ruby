@@ -21,14 +21,8 @@ class OptionalRepository
     puts " optionalsssssssssssssssssssssssssssss"
      p @optionals
     @optional.find { |item| item.name == name }
-    # @optionals.find { |item| puts item; item.name == optional }
   end
-  # def find_optional(optional)
-  #   puts "\n \n"
-  #   puts " optionalsssssssssssssssssssssssssssss"
-  #    p @optionals
-  #   @optionals.each { |item| puts item; item.name == optional }
-  # end
+
   private
 
   def load_yml
