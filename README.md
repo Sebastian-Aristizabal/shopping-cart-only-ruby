@@ -1,3 +1,3 @@
 # shopping-cart-only-ruby
 
-running ruby app.rb
+run ruby app.rb
