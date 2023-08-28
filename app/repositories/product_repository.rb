@@ -16,13 +16,6 @@ class ProductRepository
     @products.find { |product| product.name == name }
   end
 
-  def find_product(name)
-    puts "\n \n"
-    puts " productsssssssssssssssssssssssssssss"
-     p @products
-    @product.find { |item| item.name == name }
-  end
-
   private
 
   def load_yml

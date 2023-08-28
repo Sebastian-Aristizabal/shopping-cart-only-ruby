@@ -14,6 +14,7 @@ class Router
   end
 
   def print_menu
+    puts "\n \n"
     puts "-----------------------------------------------------"
     puts "----------Welcome to the Grocery Store---------------"
     puts "Please pick an option"

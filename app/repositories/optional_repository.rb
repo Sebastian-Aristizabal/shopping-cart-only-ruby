@@ -29,6 +29,5 @@ class OptionalRepository
         price: optional_data["price"].to_i
       )
     end
-    p @optionals
   end
 end

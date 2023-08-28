@@ -1,6 +1,8 @@
 class ProductsView
 
   def display(products)
+
+    puts "\n"
     puts "-----------------ALL PRODUCTS---------------------"
     puts "\n"
     products.each_with_index do |product, index|

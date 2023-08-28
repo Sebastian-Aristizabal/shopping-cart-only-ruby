@@ -30,11 +30,23 @@ class ShoppingCartsController
 
   def cost_calculator
 
+    product_name = nil
+    product = nil
     # Select the product you want to buy
-    product_name = @products_view.ask_user_for('product name')
+    loop do
+      product_name = @products_view.ask_user_for('product name')
+
+      product = @product_repository.find(product_name)
+
+      if product.nil?
+        puts 'Product not found. Please enter a valid product name.'
+      else
+        break # Si el producto se encuentra, salimos del bucle
+      end
+    end
+
     # Ask user for quantity
-    product = @product_repository.find(product_name)
-    # Look for the product price in repository
+
     quantity = @products_view.ask_user_for('quantity').to_i
     # Calculate total price per unit
     price = product.price
@@ -55,7 +67,7 @@ class ShoppingCartsController
     ############## bag logic ############################
     @bag = @products_view.ask_user_for('Do you want a bag with your purchase? (y/n)')
 
-    if ["y", 'YES', 'yes', 'Yes', 'si', 'Si', 'SI'].include?(@bag)
+    if ["Y", "y", 'YES', 'yes', 'Yes', 'si', 'Si', 'SI'].include?(@bag)
 
       list_shopping_cart { @shopping_carts_view.display_bug_buy; @shopping_carts_view.display_final_total_price(@total_price + 2) }
     else
@@ -72,7 +84,7 @@ class ShoppingCartsController
 
     tip = @products_view.ask_user_for('Do you want to give tip? (y/n)')
 
-    if ["y", 'YES', 'yes', 'Yes', 'si', 'Si', 'SI'].include?(tip)
+    if ["Y", "y", 'YES', 'yes', 'Yes', 'si', 'Si', 'SI'].include?(tip)
       tip = @products_view.ask_user_for("How much do you want to give a tip($ dollars)? \n tip cannot be less than 10% of the total price(#{(@total_price * 0.1).round(2)}$))")
 
       if tip.to_i < @total_price * 0.1
@@ -80,7 +92,7 @@ class ShoppingCartsController
         tip_calculator
 
       else
-        if ["y", 'YES', 'yes', 'Yes', 'si', 'Si', 'SI'].include?(@bag)
+        if ["Y", "y", 'YES', 'yes', 'Yes', 'si', 'Si', 'SI'].include?(@bag)
           list_shopping_cart { @shopping_carts_view.display_bug_buy; @shopping_carts_view.display_final_total_price((@total_price + 2).round(2)) }
           @shopping_carts_view.display_tip(tip)
           @shopping_carts_view.display_discount(@discount)
@@ -93,7 +105,7 @@ class ShoppingCartsController
         end
       end
     else
-      if ["y", 'YES', 'yes', 'Yes', 'si', 'Si', 'SI'].include?(@bag)
+      if ["Y", "y", 'YES', 'yes', 'Yes', 'si', 'Si', 'SI'].include?(@bag)
         tip = 0
         list_shopping_cart { @shopping_carts_view.display_bug_buy; @shopping_carts_view.display_final_total_price((@total_price + 2).round(2)) }
         @shopping_carts_view.display_tip(tip)
