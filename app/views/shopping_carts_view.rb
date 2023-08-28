@@ -14,6 +14,15 @@ class ShoppingCartsView
 
   end
 
+  def display_tip(tip)
+    puts " \n"
+    puts "Tip:.............................................. + #{tip}$"
+  end
+
+  def display_discount(discount)
+    puts " \n"
+    puts "Discount:.......................................... - #{discount}$"
+  end
 
   def display_bug_buy
     puts " \n -----------------------------------------------------------------------"

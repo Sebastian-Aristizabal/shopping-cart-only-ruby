@@ -11,6 +11,7 @@ class ShoppingCartsController
     @products_view = ProductsView.new
     @shopping_carts_view = ShoppingCartsView.new
     @total_price = 0
+    @discount = 0
   end
 
 
@@ -26,6 +27,7 @@ class ShoppingCartsController
     @shopping_carts_view.display_list_shopping_cart(shopping_cart_products)
     return yield if block_given?
 
+    @shopping_carts_view.display_discount(@discount)
     @shopping_carts_view.display_final_total_price(@total_price)
 
   end
@@ -34,20 +36,19 @@ class ShoppingCartsController
 
     # Select the product you want to buy
     product_name = @products_view.ask_user_for('product name')
-    # # 7. Ask user for quantity
+    # Ask user for quantity
     product = @product_repository.find(product_name)
     # look for the product price in repository
     quantity = @products_view.ask_user_for('quantity').to_i
-    # 8. Calculate total price per unit
+    # alculate total price per unit
     price = product.price
     total_price, product_tired_price = total_price_product(product, quantity)
     @products_view.display_total_price(product, quantity, price || product_tired_price, total_price)
 
-    # 10. Add to shopping cart
-    # shopping_cart_product =
+    # Add to shopping cart
     shopping_cart = ShoppingCart.new(name: product_name, quantity: quantity, unit_price: price || product_tired_price, total_price: total_price)
 
-    # 11. Store it in repo
+    # Store it in repo
     @shopping_cart_repository.create(shopping_cart)
   end
 
@@ -65,7 +66,15 @@ class ShoppingCartsController
       list_shopping_cart { @shopping_carts_view.display_final_total_price(@total_price) }
     end
     ############### tip logic ##############################
+    promotion
     tip_calculator
+    puts "\n \n"
+    # p @shopping_cart_repository.all
+    puts "\n \n"
+    p @total_price
+    puts "\n \n"
+    p @shopping_cart_repository.count
+
   end
 
   private
@@ -83,26 +92,33 @@ class ShoppingCartsController
 
       else
         if ["y", 'YES', 'yes', 'Yes', 'si', 'Si', 'SI'].include?(@bag)
-
           list_shopping_cart { @shopping_carts_view.display_bug_buy; @shopping_carts_view.display_final_total_price((@total_price + 2).round(2)) }
-          @shopping_carts_view.display_final_total_price((@total_price + 2) + tip.to_i)
+          @shopping_carts_view.display_tip(tip)
+          @shopping_carts_view.display_discount(@discount)
+          @shopping_carts_view.display_final_total_price((@total_price + 2) + tip.to_i - @discount)
         else
           list_shopping_cart { @shopping_carts_view.display_bug_buy; @shopping_carts_view.display_final_total_price(@total_price) }
-          @shopping_carts_view.display_final_total_price(@total_price + tip.to_i)
+          @shopping_carts_view.display_tip(tip)
+          @shopping_carts_view.display_discount(@discount)
+          @shopping_carts_view.display_final_total_price(@total_price + tip.to_i - @discount)
         end
       end
     else
       # @shopping_carts_view.display_final_total_price(@total_price)
       if ["y", 'YES', 'yes', 'Yes', 'si', 'Si', 'SI'].include?(@bag)
-
+        tip = 0
         list_shopping_cart { @shopping_carts_view.display_bug_buy; @shopping_carts_view.display_final_total_price((@total_price + 2).round(2)) }
-        @shopping_carts_view.display_final_total_price((@total_price + 2) + tip.to_i)
+        @shopping_carts_view.display_tip(tip)
+        @shopping_carts_view.display_discount(@discount)
+        @shopping_carts_view.display_final_total_price((@total_price + 2) + tip.to_i - @discount)
       else
+        tip = 0
         list_shopping_cart { @shopping_carts_view.display_bug_buy; @shopping_carts_view.display_final_total_price(@total_price) }
-        @shopping_carts_view.display_final_total_price(@total_price + tip.to_i)
+        @shopping_carts_view.display_tip(tip)
+        @shopping_carts_view.display_discount(@discount)
+        @shopping_carts_view.display_final_total_price(@total_price + tip.to_i - @discount)
       end
     end
-
   end
 
   def total_price_product(product, quantity)
@@ -125,6 +141,20 @@ class ShoppingCartsController
     shopping_cart_products.each do |product|
       @total_price += product.total_price
     end
+  end
 
+  def promotion
+
+    if @shopping_cart_repository.count >= 20 && @total_price > 100
+      @discount = @total_price * 0.2
+
+    elsif @shopping_cart_repository.count >= 20
+      @discount = @total_price * 0.2
+
+    elsif @total_price > 100
+      @discount = @total_price * 0.1
+    else
+      @discount = 0
+    end
   end
 end

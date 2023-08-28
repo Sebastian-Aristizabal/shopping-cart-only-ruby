@@ -12,10 +12,6 @@ class ProductsController
     products = @product_repository.all
     p products
     @products_view.display(products)
-    # product1 = 'kiwi'
-    # h = { name: product1 }
-    # product = Product.new(h)
-    # p product.products
   end
 
   def add
@@ -40,32 +36,32 @@ class ProductsController
 
     # Select the product you want to buy
     product_name = @products_view.ask_user_for('product name')
-    # # 7. Ask user for quantity
+    # Ask user for quantity
     product = @product_repository.find(product_name)
-    # look for the product price in repository
+    # Look for the product price in repository
     puts "-------------------------------"
     p product
     puts "-------------------------------"
     quantity = @products_view.ask_user_for('quantity').to_i
-    # 8. Calculate total price per unit
+    # Calculate total price per unit
     price = product.price
     total_price, product_tired_price = total_price_product(product, quantity)
     @products_view.display_total_price(product, quantity, price || product_tired_price, total_price)
-    # 9. Display final total price
+    # Display final total price
     final_total_price = final_total_price(total_price)
 
-    # 10. Add to shopping cart
+    # Add to shopping cart
     # shopping_cart_product =
     shopping_cart = ShoppingCart.new(name: product_name, quantity: quantity, unit_price: price, total_price: total_price)
 
-    # 11. Store it in repo
+    # Store it in repo
     @shopping_cart_repository.create(shopping_cart)
   end
 
   private
 
   def total_price_product(product, quantity)
-    # 8. Calculate total price
+    # Calculate total price
 
     if product.price_model == "fixed"
       total_price = product.price * quantity

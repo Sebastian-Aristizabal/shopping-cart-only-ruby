@@ -13,6 +13,16 @@ class ShoppingCartRepository
     save_csv
   end
 
+  def count
+    p @shopping_cart
+    # @shopping_cart.count
+    counter = 0
+    @shopping_cart.each do |item|
+      counter += item.quantity
+    end
+    p counter
+  end
+
   def all
     @shopping_cart
   end
