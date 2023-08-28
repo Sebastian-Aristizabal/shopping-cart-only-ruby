@@ -1,5 +1,4 @@
 class Product
-  # attr_reader :price, :from, :to
   attr_accessor :name, :price_model, :price, :tiers
 
   def initialize(product = {})

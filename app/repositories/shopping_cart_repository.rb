@@ -14,13 +14,11 @@ class ShoppingCartRepository
   end
 
   def count
-    p @shopping_cart
-    # @shopping_cart.count
     counter = 0
     @shopping_cart.each do |item|
       counter += item.quantity
     end
-    p counter
+    counter
   end
 
   def all

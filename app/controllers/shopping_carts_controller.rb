@@ -34,9 +34,9 @@ class ShoppingCartsController
     product_name = @products_view.ask_user_for('product name')
     # Ask user for quantity
     product = @product_repository.find(product_name)
-    # look for the product price in repository
+    # Look for the product price in repository
     quantity = @products_view.ask_user_for('quantity').to_i
-    # alculate total price per unit
+    # Calculate total price per unit
     price = product.price
     total_price, product_tired_price = total_price_product(product, quantity)
     @products_view.display_total_price(product, quantity, price || product_tired_price, total_price)
@@ -110,8 +110,8 @@ class ShoppingCartsController
   end
 
   def total_price_product(product, quantity)
-    # 8. Calculate total price
 
+    # Calculate total price
     if product.price_model == "fixed"
       total_price = product.price * quantity
     elsif product.price_model == "tiered"
@@ -124,7 +124,7 @@ class ShoppingCartsController
     end
   end
 
-  # 9. Display final total price
+  # Display final total price
   def shopping_cart_total_price(shopping_cart_products)
     shopping_cart_products.each do |product|
       @total_price += product.total_price
@@ -135,12 +135,11 @@ class ShoppingCartsController
 
     if @shopping_cart_repository.count >= 20 && @total_price > 100
       @discount = @total_price * 0.2
-
     elsif @shopping_cart_repository.count >= 20
       @discount = @total_price * 0.2
-
     elsif @total_price > 100
       @discount = @total_price * 0.1
+
     else
       @discount = 0
     end

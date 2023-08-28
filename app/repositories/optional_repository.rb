@@ -16,12 +16,6 @@ class OptionalRepository
     @optionals.find { |optional| optional.name == name }
   end
 
-  def find_optional(name)
-    puts "\n \n"
-    puts " optionalsssssssssssssssssssssssssssss"
-     p @optionals
-    @optional.find { |item| item.name == name }
-  end
 
   private
 
@@ -37,5 +31,4 @@ class OptionalRepository
     end
     p @optionals
   end
-
 end
